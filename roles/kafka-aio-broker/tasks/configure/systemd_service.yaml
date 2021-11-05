@@ -1,0 +1,34 @@
+---
+- name: Install Zookeeper systemd service
+  template:
+    src: "etc/systemd/system/amq-streams-zookeeper.service.j2"
+    dest: "/etc/systemd/system/amq-streams-zookeeper-{{ item.id }}.service"
+  loop: "{{ zookeeper }}"
+  register: systemd_zookeeper_unit_install
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  when: systemd_zookeeper_unit_install.changed
+
+- name: Install Kafka Broker systemd service
+  template:
+    src: "etc/systemd/system/amq-streams-broker.service.j2"
+    dest: "/etc/systemd/system/amq-streams-broker-{{ item.id }}.service"
+  loop: "{{ brokers }}"
+  register: systemd_broker_unit_install
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  when: systemd_broker_unit_install.changed
+
+    #- name: Enable AMQ-Broker service
+    #  systemd:
+    #    name: amq-broker
+    #    enabled: yes
+    #    masked: no
+    #
+    #- name: Start AMQ-Broker service
+    #  debug:
+    #    msg: "Restarting AMQ Broker... {{ amq.broker_name }}"
+    #  notify: Start broker service
+    #  when: amq.restart_service == 'yes'

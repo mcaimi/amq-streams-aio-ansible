@@ -1,0 +1,3 @@
+---
+- include: install/main.yaml
+- include: configure/main.yaml

@@ -1,0 +1,6 @@
+---
+- include: packages.yaml
+- include: users_and_dirs.yaml
+- include: download.yaml
+  when: common.remote_src == 'yes'
+- include: decompress.yaml

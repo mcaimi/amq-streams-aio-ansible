@@ -1,0 +1,25 @@
+amq:
+  username: jboss
+  user_comment: "AMQ Streams User"
+  user_uid: 1010
+  group: "amq-streams"
+  group_id: 1010
+  broker_dir: "{{ common.install_dir }}/{{ common.rh_local_version }}"
+  broker_dir_mode: "u+rwx,g+rwx,o="
+  restart_service: "no"
+
+parameters:
+  config_dir: "{{ amq.broker_dir }}/config/"
+
+brokers:
+  - id: 0
+    port: 9092
+    data_dir: "{{ amq.broker_dir }}/broker_data_0"
+    host: localhost
+    zookeeper_connection_string: "localhost:2181"
+
+zookeeper:
+  - id: 0
+    port: 2181
+    host: localhost
+    data_dir: "{{ amq.broker_dir }}/zookeeper_data_0"

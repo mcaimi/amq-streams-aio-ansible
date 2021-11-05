@@ -1,0 +1,16 @@
+# KAFKA ALL-IN-ONE INSTALLATION PLAYBOOK
+
+- hosts: kafka-node
+  remote_user: root
+  become: no
+  any_errors_fatal: true
+
+  pre_tasks:
+    - include_vars:
+        file: "common"
+    - include_vars:
+        file: "environments/dev"
+    - include_vars:
+        file: "credentials/customerportal"
+  roles:
+    - kafka-aio-broker

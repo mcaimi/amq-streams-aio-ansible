@@ -1,0 +1,11 @@
+- block:
+    - name: Fix permissions for broker paths
+      file:
+        path: "{{ amq.broker_dir }}"
+        recurse: yes
+        owner: "{{ amq.username }}"
+        group: "{{ amq.group }}"
+        mode: "{{ amq.broker_dir_mode }}"
+        state: directory
+  tags:
+    - amq::post_install_config

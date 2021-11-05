@@ -1,0 +1,17 @@
+[Unit]
+Description = RedHat AMQ Streams Broker Instance
+After = network.target
+{% for node in zookeeper %}
+Requires = amq-streams-zookeeper-{{ node.id }}.service
+{% endfor %}
+After = amq-streams-zookeeper.service
+
+[Service]
+ExecStart = {{ amq.broker_dir }}/bin/kafka-server-start.sh -daemon {{ parameters.config_dir }}/server-{{ item.id }}.properties
+ExecStop = {{ amq.broker_dir }}/bin/kafka-server-stop.sh
+Type=forking
+User = {{ amq.username }}
+Group = {{ amq.group }}
+
+[Install]
+WantedBy = multi-user.target

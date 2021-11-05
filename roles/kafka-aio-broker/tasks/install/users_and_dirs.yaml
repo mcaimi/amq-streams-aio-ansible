@@ -1,0 +1,23 @@
+- block:
+    - name: Add the AMQ Streams unix group
+      group:
+        name: "{{ amq.group }}"
+        gid: "{{ amq.group_id }}"
+        state: present
+
+    - name: Add and configure the AMQ Streams user
+      user:
+        name: "{{ amq.username }}"
+        comment: "{{ amq.user_comment }}"
+        uid: "{{ amq.user_uid }}"
+        group: "{{ amq.group }}"
+
+    - name: Create and setup the AMQ Streams software installation path
+      file:
+        path: "{{ common.install_dir }}"
+        owner: "{{ amq.username }}"
+        group: "{{ amq.group }}"
+        mode: "{{ common.install_dir_mode }}"
+        state: directory
+  tags:
+    - amq::preconfig

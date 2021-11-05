@@ -1,0 +1,29 @@
+- block:
+    - name: Install Dependencies (DNF)
+      dnf:
+        name: "{{ item }}"
+        state: present
+      loop:
+        "{{ customerportal.dependencies }}"
+      when: ansible_pkg_mgr == 'dnf'
+    - name: Install Python (YUM)
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        "{{ customerportal.dependencies }}"
+      when: ansible_pkg_mgr == 'yum'
+    - name: Install module dependencies via PIP
+      pip:
+        name: "{{ item }}"
+        state: present
+      loop:
+        "{{ customerportal.pip_dependencies }}"
+    - name: Download AMQ Streams Tarball Distribution from Customer Portal
+      rh_fetch:
+        artifact_url: "{{ common.amq_artifact_download_url }}"
+        target: "{{ payload.artifact_name }}"
+        username: "{{ customerportal.username }}"
+        password: "{{ customerportal.password }}"
+  tags:
+    - amq::remote_csp_download

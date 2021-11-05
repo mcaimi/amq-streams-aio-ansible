@@ -1,0 +1,11 @@
+- block:
+    - name: Decompress AMQ Streams artifact package into the target directory
+      unarchive:
+        src: "{{ payload.artifact_name }}"
+        remote_src: "{{ common.remote_src }}"
+        dest: "{{ common.install_dir }}"
+        owner: "{{ amq.username }}"
+        group: "{{ amq.group }}"
+        mode: "{{ common.install_dir_mode }}"
+  tags:
+    - amq::decompress

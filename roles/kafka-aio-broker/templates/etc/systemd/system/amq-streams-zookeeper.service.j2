@@ -1,0 +1,13 @@
+[Unit]
+Description = RedHat AMQ Streams Zookeeper Instance
+After = network.target
+
+[Service]
+ExecStart = {{ amq.broker_dir }}/bin/zookeeper-server-start.sh -daemon {{ parameters.config_dir }}/zookeeper-{{ item.id }}.properties
+ExecStop = {{ amq.broker_dir }}/bin/zookeeper-server-stop.sh
+Type=forking
+User = {{ amq.username }}
+Group = {{ amq.group }}
+
+[Install]
+WantedBy = multi-user.target

@@ -1,0 +1,9 @@
+---
+- name: Start Kafka Zookeeper service
+  systemd:
+    name: amq-streams-zookeeper.service
+    state: restarted
+- name: Start Kafka Broker service
+  systemd:
+    name: amq-streams-broker.service
+    state: restarted

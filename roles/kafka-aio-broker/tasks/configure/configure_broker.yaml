@@ -1,0 +1,39 @@
+- block:
+    - name: Create AMQ Streams server folders
+      file:
+        path: "{{ item }}"
+        owner: "{{ amq.username }}"
+        group: "{{ amq.group }}"
+        mode: "{{ common.install_dir_mode }}"
+        state: directory
+      loop:
+        - "{{ parameters.config_dir }}"
+
+    - name: Create Data Folders
+      file:
+        path: "{{ item.data_dir }}"
+        owner: "{{ amq.username }}"
+        group: "{{ amq.group }}"
+        mode: "{{ common.install_dir_mode }}"
+        state: directory
+      loop: "{{ brokers + zookeeper }}"
+
+    - name: Render Zookeeper Configuration templates
+      template:
+        src: "amq-streams/zookeeper.properties.j2"
+        dest: "{{ parameters.config_dir }}/zookeeper-{{ item.id }}.properties"
+        owner: "{{ amq.username }}"
+        group: "{{ amq.group }}"
+        backup: True
+      loop: "{{ zookeeper }}"
+
+    - name: Render AMQ Streams Broker Configuration templates
+      template:
+        src: "amq-streams/server.properties.j2"
+        dest: "{{ parameters.config_dir }}/server-{{ item.id }}.properties"
+        owner: "{{ amq.username }}"
+        group: "{{ amq.group }}"
+        backup: True
+      loop: "{{ brokers }}"
+  tags:
+    - amq::broker_configuration_render_templates
