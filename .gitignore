@@ -1,0 +1,3 @@
+hosts.test
+vars/customerportal.redhat
+test-playbook.yaml
