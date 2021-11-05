@@ -2,3 +2,5 @@
 - include: configure_broker.yaml
 - include: post_configuration.yaml
 - include: systemd_service.yaml
+- include: firewalld.yaml
+  when: common.configure_firewall==True

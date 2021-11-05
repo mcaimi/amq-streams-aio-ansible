@@ -1,0 +1,28 @@
+- block:
+    - name: Allow required services in FirewallD
+      ansible.posix.firewalld:
+        service: "ssh"
+        permanent: "true"
+        state: "enabled"
+      register: firewall_status
+    - name: Reload FirewallD Configuration
+      systemd:
+        name: firewalld.service
+        state: restarted
+      when: firewall_status.changed
+    - name: Allow Kafka and Zookeeper Ports in FirewallD
+      ansible.posix.firewalld:
+        port: "{{ item.port }}/tcp"
+        permanent: "true"
+        state: "enabled"
+      loop: "{{ brokers + zookeeper }}"
+      register: firewall_status
+    - name: Reload FirewallD Configuration
+      systemd:
+        name: firewalld.service
+        state: restarted
+      when: firewall_status.changed
+  tags:
+    - firewalld::network_services
+    - firewalld::allowed_protocols
+    - firewalld::systemd_unit

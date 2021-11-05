@@ -5,6 +5,7 @@ common:
   rh_local_version: "kafka_2.12-2.8.0.redhat-00002"
   install_dir: "/opt/amq-streams"
   install_dir_mode: "u+rwx,g+rwx,o="
+  configure_firewall: True
 
 payload:
   artifact_name: "/tmp/amq-streams-{{ common.amq_version }}-bin.zip"

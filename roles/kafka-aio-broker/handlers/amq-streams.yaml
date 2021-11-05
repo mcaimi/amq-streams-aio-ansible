@@ -1,9 +1,17 @@
 ---
-- name: Start Kafka Zookeeper service
+- name: Stop Kafka Broker service
   systemd:
-    name: amq-streams-zookeeper.service
-    state: restarted
-- name: Start Kafka Broker service
+    name: amq-streams-broker-{{ item.id }}.service
+    state: stopped
+  loop: "{{ brokers }}"
+- name: Re/Start Kafka Zookeeper service
   systemd:
-    name: amq-streams-broker.service
+    name: amq-streams-zookeeper-{{ item.id }}.service
     state: restarted
+  loop: "{{ zookeeper }}"
+- name: Start Kafka Broker Service
+  systemd:
+    name: amq-streams-broker-{{ item.id }}.service
+    state: started
+  loop: "{{ brokers }}"
+

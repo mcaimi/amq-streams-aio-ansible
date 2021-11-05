@@ -21,14 +21,15 @@
   command: systemctl daemon-reload
   when: systemd_broker_unit_install.changed
 
-    #- name: Enable AMQ-Broker service
-    #  systemd:
-    #    name: amq-broker
-    #    enabled: yes
-    #    masked: no
-    #
-    #- name: Start AMQ-Broker service
-    #  debug:
-    #    msg: "Restarting AMQ Broker... {{ amq.broker_name }}"
-    #  notify: Start broker service
-    #  when: amq.restart_service == 'yes'
+- name: Enable Kafka Broker service
+  systemd:
+    name: amq-streams-broker-{{ item.id }}.service
+    enabled: yes
+    masked: no
+  loop: "{{ brokers }}"
+
+- name: Start Kafka-Broker service
+  debug:
+    msg: "Restarting Kafka Broker..."
+  notify: Start broker service
+  when: amq.restart_service == 'yes'
