@@ -1,3 +1,4 @@
 hosts.test
 vars/customerportal.redhat
 test-playbook.yaml
+vars/environments/*.test
