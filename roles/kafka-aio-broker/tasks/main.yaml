@@ -1,3 +1,3 @@
 ---
-- include: install/main.yaml
-- include: configure/main.yaml
+- include_tasks: install/main.yaml
+- include_tasks: configure/main.yaml

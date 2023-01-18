@@ -1,1 +1,1 @@
-- include: amq-streams.yaml
+- include_tasks: amq-streams.yaml

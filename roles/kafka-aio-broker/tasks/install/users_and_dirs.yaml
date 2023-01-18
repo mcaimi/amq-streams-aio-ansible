@@ -1,11 +1,13 @@
 - block:
     - name: Add the AMQ Streams unix group
+      become: true
       group:
         name: "{{ amq.group }}"
         gid: "{{ amq.group_id }}"
         state: present
 
     - name: Add and configure the AMQ Streams user
+      become: true
       user:
         name: "{{ amq.username }}"
         comment: "{{ amq.user_comment }}"
@@ -13,6 +15,7 @@
         group: "{{ amq.group }}"
 
     - name: Create and setup the AMQ Streams software installation path
+      become: true
       file:
         path: "{{ common.install_dir }}"
         owner: "{{ amq.username }}"

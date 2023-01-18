@@ -1,5 +1,6 @@
 - block:
     - name: Decompress AMQ Streams artifact package into the target directory
+      become: true
       unarchive:
         src: "{{ payload.artifact_name }}"
         remote_src: "{{ common.remote_src }}"
