@@ -1,8 +1,8 @@
 # KAFKA ALL-IN-ONE INSTALLATION PLAYBOOK
 
-- hosts: kafka-node
+- hosts: kafka_node
   remote_user: root
-  become: no
+  become: true
   any_errors_fatal: true
 
   pre_tasks:
