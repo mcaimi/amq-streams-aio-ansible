@@ -1,8 +1,8 @@
 common:
-  amq_artifact_download_url: https://access.redhat.com/jbossnetwork/restricted/softwareDownload.html?softwareId=101031&product=jboss.amq.streams
+  amq_artifact_download_url: https://access.redhat.com/jbossnetwork/restricted/softwareDownload.html?softwareId=105011
   remote_src: "yes"
-  amq_version: "1.8.0"
-  rh_local_version: "kafka_2.12-2.8.0.redhat-00002"
+  amq_version: "2.3.0"
+  rh_local_version: "kafka_2.13-3.3.1.redhat-00008"
   install_dir: "/opt/amq-streams"
   install_dir_mode: "u+rwx,g+rwx,o="
   configure_firewall: True
